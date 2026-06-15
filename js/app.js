@@ -272,8 +272,15 @@
     else renderUltimate();
   }
 
+  // Hand-struck marks as SVG; pathLength="1" lets the stroke "draw itself in".
   function glyph(mark) {
-    return '<span class="glyph">' + mark + '</span>';
+    if (mark === 'X') {
+      return '<svg class="mark" viewBox="0 0 100 100" aria-hidden="true">' +
+        '<line pathLength="1" x1="26" y1="26" x2="74" y2="74"/>' +
+        '<line pathLength="1" x1="74" y1="26" x2="26" y2="74"/></svg>';
+    }
+    return '<svg class="mark" viewBox="0 0 100 100" aria-hidden="true">' +
+      '<circle pathLength="1" cx="50" cy="50" r="27"/></svg>';
   }
 
   function renderClassic() {
@@ -343,7 +350,7 @@
       if (decided && decided !== 'draw') {
         const ov = document.createElement('div');
         ov.className = 'mini-overlay mark-' + decided.toLowerCase();
-        ov.textContent = decided;
+        ov.innerHTML = glyph(decided);
         mini.appendChild(ov);
       }
       board.appendChild(mini);
