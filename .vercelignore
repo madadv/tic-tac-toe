@@ -1,0 +1,7 @@
+# Only the static site should ship to Vercel.
+node_modules
+package.json
+package-lock.json
+test
+shots
+.git

@@ -1,0 +1,420 @@
+/* ===========================================================================
+   Tic·Tac·Toe — styles
+   Theme via [data-theme] on <html>. Dark is the default.
+   =========================================================================== */
+
+:root {
+  --x: #ff6b81;
+  --x-soft: rgba(255, 107, 129, 0.16);
+  --o: #4dd4f0;
+  --o-soft: rgba(77, 212, 240, 0.16);
+  --gold: #ffd166;
+  --accent-1: #7c6cff;
+  --accent-2: #b06cff;
+  --radius: 18px;
+  --radius-sm: 12px;
+  --shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.55);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[data-theme="dark"] {
+  --bg-grad: radial-gradient(1200px 800px at 15% -10%, #1b2150 0%, transparent 55%),
+             radial-gradient(1000px 700px at 110% 10%, #3a1d54 0%, transparent 50%),
+             linear-gradient(160deg, #0c0f24, #0a0c1c);
+  --card-bg: rgba(255, 255, 255, 0.045);
+  --card-border: rgba(255, 255, 255, 0.09);
+  --text: #eceefc;
+  --muted: #9aa0c8;
+  --cell-bg: rgba(255, 255, 255, 0.04);
+  --cell-bg-hover: rgba(255, 255, 255, 0.09);
+  --cell-border: rgba(255, 255, 255, 0.07);
+  --grid-line: rgba(255, 255, 255, 0.12);
+  --seg-bg: rgba(255, 255, 255, 0.05);
+}
+
+html[data-theme="light"] {
+  --bg-grad: radial-gradient(1100px 800px at 10% -10%, #e6ecff 0%, transparent 55%),
+             radial-gradient(900px 700px at 110% 0%, #f3e6ff 0%, transparent 50%),
+             linear-gradient(160deg, #f4f6ff, #eaeefb);
+  --card-bg: rgba(255, 255, 255, 0.72);
+  --card-border: rgba(20, 28, 70, 0.08);
+  --text: #1b1f3b;
+  --muted: #5d6492;
+  --cell-bg: rgba(255, 255, 255, 0.75);
+  --cell-bg-hover: #ffffff;
+  --cell-border: rgba(20, 28, 70, 0.08);
+  --grid-line: rgba(20, 28, 70, 0.14);
+  --seg-bg: rgba(20, 28, 70, 0.05);
+  --shadow: 0 20px 45px -22px rgba(40, 50, 120, 0.35);
+  --x: #e23b5a;
+  --o: #0ea5c4;
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: "Outfit", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg-grad) fixed;
+  background-color: #0a0c1c;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  justify-content: center;
+  min-height: 100dvh;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.app {
+  width: 100%;
+  max-width: 560px;
+  padding: clamp(16px, 4vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ------------------------------- topbar -------------------------------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  margin: 0;
+  font-size: clamp(1.5rem, 6vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(120deg, var(--x), var(--accent-2) 50%, var(--o));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.logo .dot { opacity: 0.5; padding: 0 0.05em; }
+.topbar-actions { display: flex; gap: 8px; }
+
+.icon-btn {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.15s var(--ease), background 0.2s;
+}
+.icon-btn:hover { transform: translateY(-2px); background: var(--cell-bg-hover); }
+.icon-btn:active { transform: translateY(0); }
+
+/* ------------------------------- cards --------------------------------- */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: clamp(18px, 5vw, 26px);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.hidden { display: none !important; }
+
+.screen-title {
+  margin: 0 0 18px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ------------------------------- setup --------------------------------- */
+.field { margin-bottom: 18px; }
+.field-label {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.field.disabled { opacity: 0.4; pointer-events: none; }
+
+.seggroup {
+  display: flex;
+  gap: 6px;
+  background: var(--seg-bg);
+  padding: 6px;
+  border-radius: 14px;
+}
+.seg {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 11px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.15s var(--ease);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.seg small { font-weight: 500; font-size: 0.7rem; color: var(--muted); }
+.seg:hover { background: var(--cell-bg-hover); }
+.seg.active {
+  background: linear-gradient(120deg, var(--accent-1), var(--accent-2));
+  color: #fff;
+  box-shadow: 0 8px 20px -8px var(--accent-2);
+}
+.seg.active small { color: rgba(255, 255, 255, 0.8); }
+
+.btn-primary {
+  width: 100%;
+  margin-top: 6px;
+  border: 0;
+  border-radius: 14px;
+  padding: 15px;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(120deg, var(--accent-1), var(--accent-2));
+  box-shadow: 0 14px 30px -12px var(--accent-2);
+  transition: transform 0.15s var(--ease), box-shadow 0.2s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 36px -12px var(--accent-2); }
+.btn-primary:active { transform: translateY(0); }
+
+.setup-note {
+  margin: 16px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* ---------------------------- status bar ------------------------------- */
+.statusbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.turn-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--muted);
+  flex: 0 0 auto;
+  transition: background 0.25s, box-shadow 0.25s;
+}
+.turn-dot[data-mark="X"] { background: var(--x); box-shadow: 0 0 0 4px var(--x-soft); }
+.turn-dot[data-mark="O"] { background: var(--o); box-shadow: 0 0 0 4px var(--o-soft); }
+.turn-dot[data-mark="draw"] { background: var(--gold); box-shadow: 0 0 0 4px rgba(255,209,102,0.18); }
+.status { font-size: 1.05rem; font-weight: 600; }
+
+/* ---------------------------- scoreboard ------------------------------- */
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.score {
+  text-align: center;
+  padding: 10px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--cell-bg);
+  border: 1px solid var(--cell-border);
+}
+.score-label {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.score-val { display: block; font-size: 1.5rem; font-weight: 800; line-height: 1.2; }
+.score-x .score-val { color: var(--x); }
+.score-o .score-val { color: var(--o); }
+.score-draw .score-val { color: var(--gold); }
+
+/* ------------------------------ boards --------------------------------- */
+.board-wrap { display: flex; justify-content: center; }
+
+.board.classic {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: min(82vw, 380px);
+  aspect-ratio: 1;
+}
+
+.board.classic .cell {
+  border-radius: 16px;
+  border: 1px solid var(--cell-border);
+  background: var(--cell-bg);
+  font-size: clamp(2.4rem, 13vw, 3.4rem);
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, transform 0.12s var(--ease), box-shadow 0.2s;
+}
+.board.classic .cell:not(:disabled):hover { background: var(--cell-bg-hover); transform: translateY(-2px); }
+
+.cell { font-family: inherit; color: var(--text); padding: 0; }
+.cell:disabled { cursor: default; }
+.cell .glyph { display: inline-block; line-height: 1; }
+.cell.mark-x .glyph { color: var(--x); }
+.cell.mark-o .glyph { color: var(--o); }
+
+/* hover preview of the current mark on empty classic cells */
+.board.classic[data-current="X"] .cell:not(.filled):not(:disabled):hover::after { content: "X"; color: var(--x); opacity: 0.28; }
+.board.classic[data-current="O"] .cell:not(.filled):not(:disabled):hover::after { content: "O"; color: var(--o); opacity: 0.28; }
+.board.classic .cell::after { font-size: inherit; font-weight: 800; }
+
+.cell.win .glyph {
+  animation: winpulse 0.9s var(--ease) infinite alternate;
+}
+.board.classic .cell.win {
+  background: linear-gradient(120deg, rgba(255,209,102,0.18), rgba(255,209,102,0.05));
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(255, 209, 102, 0.35), 0 0 24px -6px var(--gold);
+}
+
+/* ---------------------------- ultimate --------------------------------- */
+.board.ultimate {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: min(94vw, 480px);
+  aspect-ratio: 1;
+}
+.mini {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  padding: 6px;
+  border-radius: 14px;
+  background: var(--seg-bg);
+  border: 2px solid transparent;
+  transition: border-color 0.25s, box-shadow 0.25s, opacity 0.25s;
+}
+.mini.active {
+  border-color: var(--accent-2);
+  box-shadow: 0 0 0 1px var(--accent-2), 0 0 22px -6px var(--accent-2);
+}
+.mini.decided .cell { opacity: 0.5; }
+.mini.won-x { background: var(--x-soft); }
+.mini.won-o { background: var(--o-soft); }
+.mini.metawin {
+  animation: metaflash 0.9s var(--ease) infinite alternate;
+}
+.board.ultimate .cell {
+  border-radius: 7px;
+  border: 1px solid var(--cell-border);
+  background: var(--cell-bg);
+  font-size: clamp(0.85rem, 4.2vw, 1.4rem);
+  font-weight: 800;
+  cursor: pointer;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.board.ultimate .cell:not(:disabled):hover { background: var(--cell-bg-hover); }
+.board.ultimate .cell.win { background: rgba(255, 209, 102, 0.22); }
+
+.mini-overlay {
+  position: absolute;
+  inset: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(3rem, 18vw, 5rem);
+  font-weight: 800;
+  pointer-events: none;
+  border-radius: 10px;
+  animation: pop 0.4s var(--ease);
+}
+.mini-overlay.mark-x { color: var(--x); }
+.mini-overlay.mark-o { color: var(--o); }
+
+/* ----------------------------- controls -------------------------------- */
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.btn {
+  flex: 1;
+  min-width: 110px;
+  border: 1px solid var(--card-border);
+  background: var(--cell-bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.12s var(--ease);
+}
+.btn:hover { background: var(--cell-bg-hover); transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+.btn.ghost { background: transparent; }
+
+/* ----------------------------- footer ---------------------------------- */
+.footnote {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+/* --------------------------- focus states ------------------------------ */
+:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+}
+
+/* ----------------------------- confetti -------------------------------- */
+#confetti {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* ---------------------------- animations ------------------------------- */
+@keyframes pop {
+  0% { transform: scale(0.3); opacity: 0; }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.cell.pop .glyph { animation: pop 0.32s var(--ease); }
+
+@keyframes winpulse {
+  from { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+  to { transform: scale(1.12); filter: drop-shadow(0 0 8px var(--gold)); }
+}
+@keyframes metaflash {
+  from { box-shadow: 0 0 0 1px var(--gold); }
+  to { box-shadow: 0 0 0 2px var(--gold), 0 0 26px -4px var(--gold); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

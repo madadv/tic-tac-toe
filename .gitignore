@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Vercel
+.vercel
+
+# Node — only used locally for tests/verification, never deployed
+node_modules/
+package.json
+package-lock.json
+npm-debug.log*
+
+# Local verification artifacts
+shots/

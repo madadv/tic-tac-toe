@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Tic·Tac·Toe — Classic & Ultimate</title>
+  <meta name="description" content="A polished Tic-Tac-Toe with an unbeatable AI, plus Ultimate Tic-Tac-Toe. Play vs the computer or a friend." />
+  <meta name="theme-color" content="#0f1224" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <!-- Open Graph / social preview -->
+  <meta property="og:title" content="Tic·Tac·Toe — Classic & Ultimate" />
+  <meta property="og:description" content="Play classic Tic-Tac-Toe against an unbeatable AI, or take on the strategic Ultimate variant." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <h1 class="logo">tic<span class="dot">·</span>tac<span class="dot">·</span>toe</h1>
+      <div class="topbar-actions">
+        <button id="soundBtn" class="icon-btn" type="button" aria-label="Mute sound">🔊</button>
+        <button id="themeBtn" class="icon-btn" type="button" aria-label="Switch to light theme">☀️</button>
+      </div>
+    </header>
+
+    <!-- ============================ Setup ============================ -->
+    <section id="setup" class="card screen">
+      <h2 class="screen-title">New game</h2>
+
+      <div class="field">
+        <span class="field-label">Game</span>
+        <div class="seggroup" id="modeGroup" role="group" aria-label="Game mode">
+          <button class="seg" type="button" data-val="classic" aria-pressed="true">
+            Classic <small>3×3</small>
+          </button>
+          <button class="seg" type="button" data-val="ultimate" aria-pressed="false">
+            Ultimate <small>9 boards</small>
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Opponent</span>
+        <div class="seggroup" id="oppGroup" role="group" aria-label="Opponent">
+          <button class="seg" type="button" data-val="cpu" aria-pressed="true">vs Computer</button>
+          <button class="seg" type="button" data-val="2p" aria-pressed="false">2 Players</button>
+        </div>
+      </div>
+
+      <div class="field" id="difficultyField">
+        <span class="field-label">Difficulty</span>
+        <div class="seggroup" id="diffGroup" role="group" aria-label="Difficulty">
+          <button class="seg" type="button" data-val="easy" aria-pressed="false">Easy</button>
+          <button class="seg" type="button" data-val="medium" aria-pressed="false">Medium</button>
+          <button class="seg" type="button" data-val="impossible" aria-pressed="true">Impossible</button>
+        </div>
+      </div>
+
+      <button id="startBtn" class="btn-primary" type="button">Start game →</button>
+      <p id="setupNote" class="setup-note"></p>
+    </section>
+
+    <!-- ============================ Game ============================= -->
+    <section id="game" class="card screen hidden">
+      <div class="statusbar">
+        <span id="turnDot" class="turn-dot" aria-hidden="true"></span>
+        <span id="status" class="status" role="status" aria-live="polite">Your move</span>
+      </div>
+
+      <div id="scoreboard" class="scoreboard">
+        <div class="score score-x">
+          <span class="score-label" id="labelX">You</span>
+          <span class="score-val" id="sX">0</span>
+        </div>
+        <div class="score score-draw">
+          <span class="score-label">Draws</span>
+          <span class="score-val" id="sDraw">0</span>
+        </div>
+        <div class="score score-o">
+          <span class="score-label" id="labelO">CPU</span>
+          <span class="score-val" id="sO">0</span>
+        </div>
+      </div>
+
+      <div id="boardWrap" class="board-wrap"></div>
+
+      <div class="controls">
+        <button id="newGameBtn" class="btn" type="button">New round</button>
+        <button id="resetScoreBtn" class="btn ghost" type="button">Reset score</button>
+        <button id="menuBtn" class="btn ghost" type="button">Menu</button>
+      </div>
+    </section>
+
+    <footer class="footnote">
+      Built with vanilla JS · <span id="footHint">click a square to play</span>
+    </footer>
+  </div>
+
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <script src="js/engine.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
