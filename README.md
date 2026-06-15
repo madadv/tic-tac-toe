@@ -5,7 +5,7 @@ A polished, dependency-free Tic-Tac-Toe you can play in the browser. Take on an
 **Ultimate** variant (nine boards in one). No build step, no frameworks — just
 HTML, CSS, and vanilla JavaScript.
 
-🎮 **Live demo:** _added after first deploy_
+🎮 **Live demo:** https://tic-tac-toe-gamma-one-22.vercel.app
 
 ## Features
 
